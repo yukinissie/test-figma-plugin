@@ -4,7 +4,7 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
 // Runs this code if the plugin is run in Figma
-if (figma.editorType === 'figma') {
+if (figma.editorType === "figma") {
   // This plugin will open a window to prompt the user to enter a number, and
   // it will then create that many rectangles on the screen.
 
@@ -14,15 +14,15 @@ if (figma.editorType === 'figma') {
   // Calls to "parent.postMessage" from within the HTML page will trigger this
   // callback. The callback will be passed the "pluginMessage" property of the
   // posted message.
-  figma.ui.onmessage =  (msg: {type: string, count: number}) => {
+  figma.ui.onmessage = (msg: { type: string; count: number }) => {
     // One way of distinguishing between different types of messages sent from
     // your HTML page is to use an object with a "type" property like this.
-    if (msg.type === 'create-shapes') {
+    if (msg.type === "create-shapes") {
       const nodes: SceneNode[] = [];
       for (let i = 0; i < msg.count; i++) {
         const rect = figma.createRectangle();
         rect.x = i * 150;
-        rect.fills = [{type: 'SOLID', color: {r: 1, g: 0.5, b: 0}}];
+        rect.fills = [{ type: "SOLID", color: { r: 1, g: 0.5, b: 0 } }];
         figma.currentPage.appendChild(rect);
         nodes.push(rect);
       }
@@ -37,7 +37,7 @@ if (figma.editorType === 'figma') {
 }
 
 // Runs this code if the plugin is run in FigJam
-if (figma.editorType === 'figjam') {
+if (figma.editorType === "figjam") {
   // This plugin will open a window to prompt the user to enter a number, and
   // it will then create that many shapes and connectors on the screen.
 
@@ -47,34 +47,34 @@ if (figma.editorType === 'figjam') {
   // Calls to "parent.postMessage" from within the HTML page will trigger this
   // callback. The callback will be passed the "pluginMessage" property of the
   // posted message.
-  figma.ui.onmessage =  (msg: {type: string, count: number}) => {
+  figma.ui.onmessage = (msg: { type: string; count: number }) => {
     // One way of distinguishing between different types of messages sent from
     // your HTML page is to use an object with a "type" property like this.
-    if (msg.type === 'create-shapes') {
+    if (msg.type === "create-shapes") {
       const numberOfShapes = msg.count;
       const nodes: SceneNode[] = [];
       for (let i = 0; i < numberOfShapes; i++) {
         const shape = figma.createShapeWithText();
         // You can set shapeType to one of: 'SQUARE' | 'ELLIPSE' | 'ROUNDED_RECTANGLE' | 'DIAMOND' | 'TRIANGLE_UP' | 'TRIANGLE_DOWN' | 'PARALLELOGRAM_RIGHT' | 'PARALLELOGRAM_LEFT'
-        shape.shapeType = 'ROUNDED_RECTANGLE'
+        shape.shapeType = "ROUNDED_RECTANGLE";
         shape.x = i * (shape.width + 200);
-        shape.fills = [{type: 'SOLID', color: {r: 1, g: 0.5, b: 0}}];
+        shape.fills = [{ type: "SOLID", color: { r: 1, g: 0.5, b: 0 } }];
         figma.currentPage.appendChild(shape);
         nodes.push(shape);
       }
 
-      for (let i = 0; i < (numberOfShapes - 1); i++) {
+      for (let i = 0; i < numberOfShapes - 1; i++) {
         const connector = figma.createConnector();
-        connector.strokeWeight = 8
+        connector.strokeWeight = 8;
 
         connector.connectorStart = {
           endpointNodeId: nodes[i].id,
-          magnet: 'AUTO',
+          magnet: "AUTO",
         };
 
         connector.connectorEnd = {
-          endpointNodeId: nodes[i+1].id,
-          magnet: 'AUTO',
+          endpointNodeId: nodes[i + 1].id,
+          magnet: "AUTO",
         };
       }
 
@@ -86,4 +86,4 @@ if (figma.editorType === 'figjam') {
     // keep running, which shows the cancel button at the bottom of the screen.
     figma.closePlugin();
   };
-};
+}
