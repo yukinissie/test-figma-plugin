@@ -1,32 +1,41 @@
-<h2>Shape Creator</h2>
+<h2>Shape and Circles Creator</h2>
 <p>Count: <input id="count" type="number" value="5" /></p>
 <button id="createShapes">Create Shapes</button>
 <button id="createCircles">Create Circles</button>
 <button id="cancel">Cancel</button>
 <script>
-  function handleCreateShapes() {
-    const textbox = document.getElementById("count");
-    const count = parseInt(textbox.value, 10);
+  // get the elements
+  const countTextbox = document.getElementById("count");
+  const createShapesBtn = document.getElementById("createShapes");
+  const createCirclesBtn = document.getElementById("createCircles");
+  const cancelBtn = document.getElementById("cancel");
+
+  // event handlers
+  function createShapesEventHandler() {
+    const count = parseInt(countTextbox.value, 10);
     parent.postMessage(
       { pluginMessage: { type: "create-shapes", count } },
       "*"
     );
   }
 
-  function handleCreateCircles() {
-    const textbox = document.getElementById("count");
-    const count = parseInt(textbox.value, 10);
+  function createCirclesEventHandler() {
+    const count = parseInt(countTextbox.value, 10);
     parent.postMessage(
       { pluginMessage: { type: "create-circles", count } },
       "*"
     );
   }
 
-  function handleCancel() {
+  function cancelEventHandler() {
     parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
   }
 
-  document.getElementById("createShapes").onclick = handleCreateShapes;
-  document.getElementById("createCircles").onclick = handleCreateCircles;
-  document.getElementById("cancel").onclick = handleCancel;
+  // add event handlers
+  function addEventHandler() {
+    createShapesBtn.onclick = createShapesEventHandler;
+    createCirclesBtn.onclick = createCirclesEventHandler;
+    cancelBtn.onclick = cancelEventHandler;
+  }
+  addEventHandler();
 </script>
